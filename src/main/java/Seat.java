@@ -26,10 +26,8 @@ public class Seat {
 
     @Override
     public String toString() {
-        return "Seat ID: " + seatId +
-                " | Seat type: " + seatType +
-                " | Seat position: " + seatPosition +
-                " | Amount: " + amount + "\n";
+        return "Seat ID: " + seatId + " | Seat type: " + seatType +
+                " | Seat position: " + seatPosition + " | Amount: " + amount + "\n";
     }
 
 }

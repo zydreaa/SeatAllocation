@@ -24,23 +24,27 @@ public class ReservationProcess {
     }
 
     public void newCustomer() {
-        int customerId = userList.size();
-        String name = JOptionPane.showInputDialog("Enter your Name: ");
-        String[] availableTicketType = {"Business Class", "Economy Class"};
-        String ticketType = (String) JOptionPane.showInputDialog(
-                null,
-                "Enter your ticket type: ",
-                "Ticket Type ",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                availableTicketType,
-                availableTicketType[0]
-        );
+        try {
+            int customerId = userList.size();
+            String name = JOptionPane.showInputDialog("Enter your Name: ");
+            String[] availableTicketType = {"Business Class", "Economy Class"};
+            String ticketType = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Enter your ticket type: ",
+                    "Ticket Type ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    availableTicketType,
+                    availableTicketType[0]
+            );
 
-        User user = new User(customerId, name, ticketType);
-        userList.add(user);
-        System.out.println(user.name + ", your account is created! \n Your account information: \n" + user);
-
+            User user = new User(customerId, name, ticketType);
+            userList.add(user);
+            System.out.println(user.name + ", your account is created! \n Your account information: \n" + user);
+        } catch (Exception e) {
+            System.out.println("Problem occurred!");
+            e.printStackTrace();
+        }
     }
 
     public void readExistingCustomers() {
@@ -54,8 +58,7 @@ public class ReservationProcess {
             int customerId = Integer.parseInt(JOptionPane.showInputDialog("Enter your customer ID: "));
             for (Purchase customerPurchase : userPurchases) {
                 if (customerPurchase.getCustomerId() == customerId) {
-                    System.out.println("Your purchase details: \n");
-                    System.out.println(customerPurchase);
+                    System.out.println("Your purchase details: \n" +customerPurchase);
                 }
             }
         }catch (Exception e){
@@ -109,14 +112,15 @@ public class ReservationProcess {
                         break;
                     }
                 }
-;
-                Purchase selectedSeat = new Purchase(customerId, userIdentify.getName(),chosenAmount, chosenSeatType, chosenSeatPosition, chosenAmount);
+
+                Purchase selectedSeat = new Purchase(customerId, userIdentify.getName(),chosenAmount,
+                        chosenSeatType, chosenSeatPosition, chosenAmount);
                 availableAmount(chosenSeatId, chosenAmount);
                 if (availability == 1) {
                     userPurchases.add(selectedSeat);
                     reduceAmount(chosenSeatId, chosenAmount);
-                    System.out.println("Seats successfully booked!");
-                    System.out.println("Your ticket details:\n" + selectedSeat);
+                    System.out.println("Seats successfully booked!\n" + "Your ticket details:\n" + selectedSeat);
+
                 } else {
                     System.out.println("Sorry, seats are not available at necessary amount!");
                 }
@@ -132,7 +136,6 @@ public class ReservationProcess {
         for (User userIdentify : userList) {
             if (userIdentify.getCustomerId() == customerId) {
                 availableTicketType = userIdentify.getTicketType();
-                System.out.println("AvailableTicketType: " + availableTicketType); // to delete
 
                 String [] availablePositions = {"Window", "Aisle"};
                 String chosenSeatPosition = (String) JOptionPane.showInputDialog(
@@ -144,7 +147,7 @@ public class ReservationProcess {
                         availablePositions,
                         availablePositions[0]
                 );
-                System.out.println("chosenSeatPosition " + chosenSeatPosition );
+
                 for (Seat seatsToOffer : seatArrayList){
                     if (availableTicketType.equals("Business Class") && chosenSeatPosition.equals("Window")){
                         chosenSeatId = 0;
@@ -160,21 +163,18 @@ public class ReservationProcess {
                         break;
                     }
                 }
-                System.out.println("chosenSeatID provided by System: " + chosenSeatId);// to delete
-                System.out.println("chosenAmountA : " + chosenAmount);// to delete
+
                 availableAmount(chosenSeatId, chosenAmount);
-                System.out.println("Availability after checking" + availability);// to delete
-                Purchase seatToOfferNew = new Purchase(customerId, userIdentify.getName(), chosenSeatId, availableTicketType, chosenSeatPosition, chosenAmount);
+                Purchase seatToOfferNew = new Purchase(customerId, userIdentify.getName(), chosenSeatId,
+                        availableTicketType, chosenSeatPosition, chosenAmount);
                 if (availability == 1) {
                     userPurchases.add(seatToOfferNew);
                     reduceAmountA(chosenSeatId, chosenAmount);
-                    System.out.println("Seats successfully booked!");
-                    System.out.println("Your ticket details: \n" + seatToOfferNew);
+                    System.out.println("Seats successfully booked!\n" + "Your ticket details: \n" + seatToOfferNew);
                 } else {
                     System.out.println("Sorry, seats are not available at necessary amount!");
                 }
             }
-
         }
     }
 
@@ -206,5 +206,4 @@ public class ReservationProcess {
             }
         }
     }
-
 }
