@@ -58,11 +58,11 @@ public class ReservationProcess {
             int customerId = Integer.parseInt(JOptionPane.showInputDialog("Enter your customer ID: "));
             for (Purchase customerPurchase : userPurchases) {
                 if (customerPurchase.getCustomerId() == customerId) {
-                    System.out.println("Your purchase details: \n" +customerPurchase);
+                    System.out.println("Your purchase details: \n" + customerPurchase);
                 }
             }
-        }catch (Exception e){
-                System.out.println("This customer hasn't bought any ticket yet!");
+        } catch (Exception e) {
+            System.out.println("This customer hasn't bought any ticket yet!");
         }
     }
 
@@ -77,7 +77,7 @@ public class ReservationProcess {
         int chosenAmount = Integer.parseInt(JOptionPane.showInputDialog("Enter seat amount: "));
         for (User userIdentify : userList) {
             if (userIdentify.getCustomerId() == customerId) {
-                String [] availableType = {"Business Class", "Economy Class"};
+                String[] availableType = {"Business Class", "Economy Class"};
                 String chosenSeatType = (String) JOptionPane.showInputDialog(
                         null,
                         "Chose seat type: ",
@@ -87,7 +87,7 @@ public class ReservationProcess {
                         availableType,
                         availableType[0]
                 );
-                String [] availablePositions = {"Window", "Aisle"};
+                String[] availablePositions = {"Window", "Aisle"};
                 String chosenSeatPosition = (String) JOptionPane.showInputDialog(
                         null,
                         "Chose seat position: ",
@@ -97,14 +97,14 @@ public class ReservationProcess {
                         availablePositions,
                         availablePositions[0]
                 );
-                for (Seat seatsToOffer : seatArrayList){
-                    if (chosenSeatType.equals("Business Class") && chosenSeatPosition.equals("Window")){
+                for (Seat seatsToOffer : seatArrayList) {
+                    if (chosenSeatType.equals("Business Class") && chosenSeatPosition.equals("Window")) {
                         chosenSeatId = 0;
                         break;
-                    } else if (chosenSeatType.equals("Business Class") && chosenSeatPosition.equals("Aisle")){
+                    } else if (chosenSeatType.equals("Business Class") && chosenSeatPosition.equals("Aisle")) {
                         chosenSeatId = 1;
                         break;
-                    } else if (chosenSeatType.equals("Economy Class") && chosenSeatPosition.equals("Window")){
+                    } else if (chosenSeatType.equals("Economy Class") && chosenSeatPosition.equals("Window")) {
                         chosenSeatId = 2;
                         break;
                     } else {
@@ -113,7 +113,7 @@ public class ReservationProcess {
                     }
                 }
 
-                Purchase selectedSeat = new Purchase(customerId, userIdentify.getName(),chosenAmount,
+                Purchase selectedSeat = new Purchase(customerId, userIdentify.getName(), chosenAmount,
                         chosenSeatType, chosenSeatPosition, chosenAmount);
                 availableAmount(chosenSeatId, chosenAmount);
                 if (availability == 1) {
@@ -137,7 +137,7 @@ public class ReservationProcess {
             if (userIdentify.getCustomerId() == customerId) {
                 availableTicketType = userIdentify.getTicketType();
 
-                String [] availablePositions = {"Window", "Aisle"};
+                String[] availablePositions = {"Window", "Aisle"};
                 String chosenSeatPosition = (String) JOptionPane.showInputDialog(
                         null,
                         "Chose seat position: ",
@@ -148,14 +148,14 @@ public class ReservationProcess {
                         availablePositions[0]
                 );
 
-                for (Seat seatsToOffer : seatArrayList){
-                    if (availableTicketType.equals("Business Class") && chosenSeatPosition.equals("Window")){
+                for (Seat seatsToOffer : seatArrayList) {
+                    if (availableTicketType.equals("Business Class") && chosenSeatPosition.equals("Window")) {
                         chosenSeatId = 0;
                         break;
-                    } else if (availableTicketType.equals("Business Class") && chosenSeatPosition.equals("Aisle")){
+                    } else if (availableTicketType.equals("Business Class") && chosenSeatPosition.equals("Aisle")) {
                         chosenSeatId = 1;
                         break;
-                    } else if (availableTicketType.equals("Economy Class") && chosenSeatPosition.equals("Window")){
+                    } else if (availableTicketType.equals("Economy Class") && chosenSeatPosition.equals("Window")) {
                         chosenSeatId = 2;
                         break;
                     } else {
@@ -169,7 +169,7 @@ public class ReservationProcess {
                         availableTicketType, chosenSeatPosition, chosenAmount);
                 if (availability == 1) {
                     userPurchases.add(seatToOfferNew);
-                    reduceAmountA(chosenSeatId, chosenAmount);
+                    reduceAmount(chosenSeatId, chosenAmount);
                     System.out.println("Seats successfully booked!\n" + "Your ticket details: \n" + seatToOfferNew);
                 } else {
                     System.out.println("Sorry, seats are not available at necessary amount!");
@@ -195,15 +195,5 @@ public class ReservationProcess {
             availability = 1;
         }
         return availability;
-    }
-
-    private void reduceAmountA(int chosenSeatId, int chosenAmountA) {
-        for (Seat seatReduceAmount : seatArrayList) {
-            if (seatReduceAmount.getSeatId() == chosenSeatId) {
-                currentAmount = seatReduceAmount.getAmount() - chosenAmountA;
-                seatReduceAmount.setAmount(currentAmount);
-                break;
-            }
-        }
     }
 }
